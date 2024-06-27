@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page 1</title>
+    <link rel="stylesheet" href="{% static 'css/page.css'%}">
+</head>
+<body>
+    <h1><u>SENIOR BOYS PREFECT</u></h1>
+    <p><h3>Who do you want as a senior boys prefect for the next Academic year?</h3></p>
+    <div class="images-container">
+        <div>
+            <img src="{% static 'newpromedia/IMG1.jpg' %}" alt="image1" width="300px" height="250px">
+            <br>
+            <button class="vote-button" onclick="showVoteConfirm('Candidate 1', 1)">Candidate 1</button>
+        </div>
+        <div>
+            <img src="{% static 'newpromedia/IMG2.jpg' %}" alt="image2" width="300px" height="250px">
+            <br>
+            <button class="vote-button" onclick="showVoteConfirm('Candidate 2', 2)">Candidate 2</button>
+        </div>
+        <div>
+            <img src="{% static 'newpromedia/IMG3.jpg' %}" alt="image3" width="300px" height="250px">
+            <br>
+            <button class="vote-button" onclick="showVoteConfirm('Candidate 3', 3)">Candidate 3</button>
+        </div>
+    </div>
+    <br><br><br>
+    <button class="skip-button" onclick="showSkipConfirm()">Skip</button>
+
+    <!-- Modal for vote confirmation -->
+    <div id="voteModal" class="modal">
+        <div class="modal-content">
+            <p id="voteConfirmText">Are you sure you want to vote for this candidate?</p>
+            <form id="voteForm" method="post" action="{% url 'cast_vote' %}">
+                {% csrf_token %}
+                <input type="hidden" name="candidate_id" id="candidate_id">
+                <button type="submit">Yes</button>
+                <button type="button" onclick="closeModal()">No</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for skip confirmation -->
+    <div id="skipModal" class="modal">
+        <div class="modal-content">
+            <p>Are you sure you want to skip?</p>
+            <button onclick="confirmSkip()">Yes</button>
+            <button onclick="closeModal()">No</button>
+        </div>
+    </div>
+    <script>
+        
+        function showVoteConfirm(candidateName, candidateId) {
+            document.getElementById('voteConfirmText').innerText = "Are you sure you want to vote for " +candidateName+ " as your female sports prefect?";
+            document.getElementById('candidate_id').value = candidateId;
+            document.getElementById('voteModal').style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('voteModal').style.display = "none";
+            document.getElementById('skipModal').style.display = "none";
+        }
+
+        function confirmSkip() {
+            window.location.href = "{% url 'Voting page 2' %}";
+        }
+
+        function showSkipConfirm() {
+            document.getElementById('skipModal').style.display = "block";
+        }
+    
+    </script>
+</body>
+</html>
+  
