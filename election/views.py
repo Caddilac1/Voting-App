@@ -4,8 +4,6 @@ from django.db import connection
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
-import requests
-
 
 def project1(request):
     if request.method == "POST":
